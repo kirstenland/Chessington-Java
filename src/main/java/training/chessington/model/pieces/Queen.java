@@ -15,6 +15,16 @@ public class Queen extends AbstractPiece {
 
     @Override
     public List<Move> getAllowedMoves(Coordinates from, Board board) {
-        return new ArrayList<>();
+        List<Move> moves = new ArrayList<>();
+        int[] shift = new int[] {-1, 0, 1};
+        for (int rowDiff: shift) {
+            for (int colDiff: shift) {
+                if (rowDiff != 0 || colDiff != 0) {
+                    exploreDirection(moves, from, rowDiff, colDiff, board);
+                }
+            }
+        }
+
+        return moves;
     }
 }

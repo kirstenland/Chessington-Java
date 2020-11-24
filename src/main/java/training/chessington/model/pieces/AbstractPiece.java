@@ -69,7 +69,7 @@ public abstract class AbstractPiece implements Piece {
         addIfEnemy(moves, from, to, board);
     }
 
-    protected void addAllShifts(List<Move> moves, Coordinates from, int rowDiff, int colDiff, Board board) {
+    protected void exploreDirection(List<Move> moves, Coordinates from, int rowDiff, int colDiff, Board board) {
         boolean searching = true;
         Coordinates current = from;
         while (searching) {
