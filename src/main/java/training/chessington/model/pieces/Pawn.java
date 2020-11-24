@@ -27,6 +27,16 @@ public class Pawn extends AbstractPiece {
                 moves.add(new Move(from, twoSteps));
             }
         }
+
+        Coordinates[] diagonals = new Coordinates[]{from.plus(getDirection(), -1), from.plus(getDirection(), 1)};
+        for (Coordinates diagonal: diagonals) {
+            Piece piece = board.get(diagonal);
+            if (piece != null && isEnemy(piece) ) {
+                moves.add(new Move(from, diagonal));
+            }
+        }
+
         return moves;
     }
+
 }

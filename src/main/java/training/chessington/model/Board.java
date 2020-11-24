@@ -38,7 +38,11 @@ public class Board {
     }
 
     public Piece get(Coordinates coords) {
-        return board[coords.getRow()][coords.getCol()];
+        if (coords.isOnBoard()) {
+            return board[coords.getRow()][coords.getCol()];
+        } else {
+            return null;
+        }
     }
 
     public void move(Coordinates from, Coordinates to) {

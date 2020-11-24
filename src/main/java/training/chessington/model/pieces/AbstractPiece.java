@@ -40,4 +40,8 @@ public abstract class AbstractPiece implements Piece {
     public void setMoved() {
         moved = true;
     }
+
+    protected boolean isEnemy(Piece piece) {
+        return piece.getColour() != colour;
+    }
 }
