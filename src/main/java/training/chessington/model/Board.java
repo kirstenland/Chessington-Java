@@ -42,7 +42,9 @@ public class Board {
     }
 
     public void move(Coordinates from, Coordinates to) {
-        board[to.getRow()][to.getCol()] = board[from.getRow()][from.getCol()];
+        Piece piece = board[from.getRow()][from.getCol()];
+        piece.setMoved();
+        board[to.getRow()][to.getCol()] = piece;
         board[from.getRow()][from.getCol()] = null;
     }
 

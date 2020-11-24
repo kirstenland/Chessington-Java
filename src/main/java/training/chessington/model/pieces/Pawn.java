@@ -18,9 +18,11 @@ public class Pawn extends AbstractPiece {
         List<Move> moves = new ArrayList<>();
         moves.add(new Move(
                 from,
-                new Coordinates(from.getRow() + getDirection(), from.getCol())
-                )
-        );
+                new Coordinates(from.getRow() + getDirection(), from.getCol())));
+        if (!moved) {
+            moves.add(new Move(from,
+                    new Coordinates(from.getRow() + 2 * getDirection(), from.getCol())));
+        }
         return moves;
     }
 }

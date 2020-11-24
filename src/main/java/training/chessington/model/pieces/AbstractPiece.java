@@ -6,10 +6,12 @@ public abstract class AbstractPiece implements Piece {
 
     protected final Piece.PieceType type;
     protected final PlayerColour colour;
+    protected boolean moved;
 
     protected AbstractPiece(Piece.PieceType type, PlayerColour colour) {
         this.type = type;
         this.colour = colour;
+        moved = false;
     }
 
     @Override
@@ -33,5 +35,9 @@ public abstract class AbstractPiece implements Piece {
             case BLACK: return 1;
         }
         return null;
+    }
+
+    public void setMoved() {
+        moved = true;
     }
 }
