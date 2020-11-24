@@ -26,4 +26,12 @@ public abstract class AbstractPiece implements Piece {
     public String toString() {
         return colour.toString() + " " + type.toString();
     }
+
+    public Integer getDirection() {
+        switch(colour) {
+            case WHITE: return -1;
+            case BLACK: return 1;
+        }
+        return null;
+    }
 }
