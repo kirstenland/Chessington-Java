@@ -11,7 +11,7 @@ public class Bishop extends AbstractPiece {
     }
 
     @Override
-    public List<Move> getAllowedMoves(Coordinates from, Board board) {
+    public List<Move> getMovesBeforeCheck(Coordinates from, Board board) {
         List<Move> moves = new ArrayList<>();
         for (Direction direction: Direction.diagonal()) {
             exploreDirection(moves, from, direction, board);

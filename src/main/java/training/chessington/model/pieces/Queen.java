@@ -11,7 +11,7 @@ public class Queen extends AbstractPiece {
     }
 
     @Override
-    public List<Move> getAllowedMoves(Coordinates from, Board board) {
+    public List<Move> getMovesBeforeCheck(Coordinates from, Board board) {
         List<Move> moves = new ArrayList<>();
         for (Direction direction: Direction.all()) {
             exploreDirection(moves, from, direction, board);

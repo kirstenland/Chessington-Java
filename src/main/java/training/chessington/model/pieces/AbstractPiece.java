@@ -2,6 +2,7 @@ package training.chessington.model.pieces;
 
 import training.chessington.model.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class AbstractPiece implements Piece {
@@ -77,4 +78,16 @@ public abstract class AbstractPiece implements Piece {
             }
         }
     }
+
+    public List<Move> getAllowedMoves(Coordinates from, Board board) {
+        List<Move> moves = getMovesBeforeCheck(from, board);
+        List<Move> filteredMoves = new ArrayList<>();
+        for (Move move: moves) {
+            if (board.testMove(this, from, move.getTo())) {
+                filteredMoves.add(move);
+            }
+        }
+        return filteredMoves;
+    };
+
 }

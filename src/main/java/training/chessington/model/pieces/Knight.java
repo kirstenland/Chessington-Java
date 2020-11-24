@@ -15,7 +15,7 @@ public class Knight extends AbstractPiece {
     }
 
     @Override
-    public List<Move> getAllowedMoves(Coordinates from, Board board) {
+    public List<Move> getMovesBeforeCheck(Coordinates from, Board board) {
         List<Move> moves = new ArrayList<>();
         int[] shifts = new int[]{-2, -1, 1, 2};
         for (int xChange : shifts) {
