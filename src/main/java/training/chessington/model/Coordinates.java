@@ -42,6 +42,10 @@ public final class Coordinates {
         return new Coordinates(row + rowDiff, col + colDiff);
     }
 
+    public Coordinates plus(Direction direction) {
+        return plus(direction.getRowDiff(), direction.getColDiff());
+    }
+
     public boolean isOnBoard() {
         return row >= 0 && row < 8 && col >= 0 && col < 8;
     }

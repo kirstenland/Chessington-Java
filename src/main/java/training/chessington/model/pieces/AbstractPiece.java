@@ -1,9 +1,6 @@
 package training.chessington.model.pieces;
 
-import training.chessington.model.Board;
-import training.chessington.model.Coordinates;
-import training.chessington.model.Move;
-import training.chessington.model.PlayerColour;
+import training.chessington.model.*;
 
 import java.util.List;
 
@@ -69,11 +66,11 @@ public abstract class AbstractPiece implements Piece {
         addIfEnemy(moves, from, to, board);
     }
 
-    protected void exploreDirection(List<Move> moves, Coordinates from, int rowDiff, int colDiff, Board board) {
+    protected void exploreDirection(List<Move> moves, Coordinates from, Direction direction, Board board) {
         boolean searching = true;
         Coordinates current = from;
         while (searching) {
-            current = current.plus(rowDiff, colDiff);
+            current = current.plus(direction);
             moveOrTake(moves, from, current, board);
             if (!current.isOnBoard() || board.get(current) != null) {
                 searching = false;

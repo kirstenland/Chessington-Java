@@ -69,6 +69,11 @@
             <version>3.8.0</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>io.mateu</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.11.97</version>
+        </dependency>
     </dependencies>
 
 </project>
