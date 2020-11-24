@@ -26,16 +26,4 @@ public class Bishop extends AbstractPiece {
 
         return moves;
     }
-
-    private void addAllShifts(List<Move> moves, Coordinates from, int rowDiff, int colDiff, Board board) {
-        boolean searching = true;
-        Coordinates current = from;
-        while (searching) {
-            current = current.plus(rowDiff, colDiff);
-            moveOrTake(moves, from, current, board);
-            if (!current.isOnBoard() || board.get(current) != null) {
-                searching = false;
-            }
-        }
-    }
 }
