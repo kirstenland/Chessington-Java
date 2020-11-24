@@ -5,6 +5,7 @@ import training.chessington.model.Coordinates;
 import training.chessington.model.Move;
 import training.chessington.model.PlayerColour;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,6 +16,16 @@ public class Knight extends AbstractPiece {
 
     @Override
     public List<Move> getAllowedMoves(Coordinates from, Board board) {
-        return new ArrayList<>();
+        List<Move> moves = new ArrayList<>();
+        int[] shifts = new int[]{-2, -1, 1, 2};
+        for (int xChange : shifts) {
+            for (int yChange : shifts) {
+                if (Math.abs(xChange) != Math.abs(yChange)) {
+                    addIfEmpty(moves, from, from.plus(xChange, yChange), board);
+                    addIfEnemy(moves, from, from.plus(xChange, yChange), board);
+                }
+            }
+        }
+        return moves;
     }
 }
