@@ -91,4 +91,23 @@ public class KnightTest {
         // Assert
         assertThat(moves).contains(new Move(coords, coords.plus(1, 2)));
     }
+
+    @Test
+    public void knightCannotMoveOffBoard() {
+        // Arrange
+        Board board = Board.empty();
+        Piece knight = new Knight(PlayerColour.WHITE);
+        Coordinates coords = new Coordinates(7, 0);
+
+        board.placePiece(coords, knight);
+
+        // Act
+        List<Move> moves = knight.getAllowedMoves(coords, board);
+
+        // Assert
+        assertThat(moves).hasSize(2);
+        for (Move move: moves) {
+            assertThat(move.getTo().isOnBoard());
+        }
+    }
 }
