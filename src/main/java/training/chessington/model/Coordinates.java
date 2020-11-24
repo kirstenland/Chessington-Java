@@ -45,8 +45,4 @@ public final class Coordinates {
     public boolean isOnBoard() {
         return row >= 0 && row < 8 && col >= 0 && col < 8;
     }
-
-    public boolean isEmptyAndOnBoard(Board board) {
-        return isOnBoard() && board.get(this) == null;
-    }
 }

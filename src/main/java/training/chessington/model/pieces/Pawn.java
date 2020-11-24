@@ -19,21 +19,14 @@ public class Pawn extends AbstractPiece {
 
         Coordinates oneStep = from.plus(getDirection(), 0);
         Coordinates twoSteps = oneStep.plus(getDirection(), 0);
-        if (oneStep.isEmptyAndOnBoard(board)) {
-            moves.add(new Move(from, oneStep));
-        }
-        if (!moved) {
-            if (twoSteps.isEmptyAndOnBoard(board) && board.get(oneStep) == null) {
-                moves.add(new Move(from, twoSteps));
-            }
+        addIfEmpty(moves, from, oneStep, board);
+        if (!moved && board.get(oneStep) == null) {
+            addIfEmpty(moves, from, twoSteps, board);
         }
 
         Coordinates[] diagonals = new Coordinates[]{from.plus(getDirection(), -1), from.plus(getDirection(), 1)};
         for (Coordinates diagonal: diagonals) {
-            Piece piece = board.get(diagonal);
-            if (piece != null && isEnemy(piece) ) {
-                moves.add(new Move(from, diagonal));
-            }
+            addIfEnemy(moves, from, diagonal, board);
         }
 
         return moves;

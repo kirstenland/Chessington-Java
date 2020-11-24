@@ -1,6 +1,11 @@
 package training.chessington.model.pieces;
 
+import training.chessington.model.Board;
+import training.chessington.model.Coordinates;
+import training.chessington.model.Move;
 import training.chessington.model.PlayerColour;
+
+import java.util.List;
 
 public abstract class AbstractPiece implements Piece {
 
@@ -43,5 +48,19 @@ public abstract class AbstractPiece implements Piece {
 
     protected boolean isEnemy(Piece piece) {
         return piece.getColour() != colour;
+    }
+
+    protected void addIfEnemy(List<Move> moves, Coordinates from, Coordinates to, Board board) {
+        Piece piece = board.get(to);
+        if (piece != null && isEnemy(piece)) {
+            moves.add(new Move(from, to));
+        }
+    }
+
+    protected void addIfEmpty(List<Move> moves, Coordinates from, Coordinates to, Board board) {
+        Piece piece = board.get(to);
+        if (to.isOnBoard() && piece == null) {
+            moves.add(new Move(from, to));
+        }
     }
 }

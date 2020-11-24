@@ -20,7 +20,8 @@ public class King extends AbstractPiece {
         for (int xChange : shifts) {
             for (int yChange : shifts) {
                 if (xChange != 0 || yChange != 0) {
-                    moves.add(new Move(from, from.plus(xChange, yChange)));
+                    addIfEmpty(moves, from, from.plus(xChange, yChange), board);
+                    addIfEnemy(moves, from, from.plus(xChange, yChange), board);
                 }
             }
         }

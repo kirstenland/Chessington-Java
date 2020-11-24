@@ -107,4 +107,60 @@ public class KingTest {
 
     }
 
+    @Test
+    public void kingCannotMoveOffBoard() {
+        // Arrange
+        Board board = Board.empty();
+        Piece king = new King(PlayerColour.WHITE);
+        Coordinates coords = new Coordinates(7, 0);
+        board.placePiece(coords, king);
+
+        // Act
+        List<Move> moves = king.getAllowedMoves(coords, board);
+
+        // Assert
+        assertThat(moves).contains(new Move(coords, coords.plus(-1, 0)));
+        assertThat(moves).contains(new Move(coords, coords.plus(-1, 0)));
+        assertThat(moves).contains(new Move(coords, coords.plus(-1, 0)));
+        assertThat(moves).hasSize(3);
+
+    }
+
+    @Test
+    public void kingCannotTakeAllies() {
+        // Arrange
+        Board board = Board.empty();
+        Piece king = new King(PlayerColour.WHITE);
+        Piece ally = new Pawn(PlayerColour.WHITE);
+        Coordinates coords = new Coordinates(4, 6);
+        Coordinates allyCoords = coords.plus(1, 0);
+        board.placePiece(coords, king);
+        board.placePiece(allyCoords, ally);
+
+        // Act
+        List<Move> moves = king.getAllowedMoves(coords, board);
+
+        // Assert
+        assertThat(moves).doesNotContain(new Move(coords, allyCoords));
+        assertThat(moves).hasSize(7);
+    }
+
+    @Test
+    public void kingCanTakeEnemies() {
+        // Arrange
+        Board board = Board.empty();
+        Piece king = new King(PlayerColour.WHITE);
+        Piece enemy = new Pawn(PlayerColour.BLACK);
+        Coordinates coords = new Coordinates(4, 6);
+        Coordinates enemyCoords = coords.plus(1, 0);
+        board.placePiece(coords, king);
+        board.placePiece(enemyCoords, enemy);
+
+        // Act
+        List<Move> moves = king.getAllowedMoves(coords, board);
+
+        // Assert
+        assertThat(moves).contains(new Move(coords, enemyCoords));
+    }
+
 }
