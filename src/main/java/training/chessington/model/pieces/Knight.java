@@ -21,8 +21,7 @@ public class Knight extends AbstractPiece {
         for (int xChange : shifts) {
             for (int yChange : shifts) {
                 if (Math.abs(xChange) != Math.abs(yChange)) {
-                    addIfEmpty(moves, from, from.plus(xChange, yChange), board);
-                    addIfEnemy(moves, from, from.plus(xChange, yChange), board);
+                    moveOrTake(moves, from, from.plus(xChange, yChange), board);
                 }
             }
         }

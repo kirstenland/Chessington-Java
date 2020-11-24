@@ -63,4 +63,9 @@ public abstract class AbstractPiece implements Piece {
             moves.add(new Move(from, to));
         }
     }
+
+    protected void moveOrTake(List<Move> moves, Coordinates from, Coordinates to, Board board) {
+        addIfEmpty(moves, from, to, board);
+        addIfEnemy(moves, from, to, board);
+    }
 }
