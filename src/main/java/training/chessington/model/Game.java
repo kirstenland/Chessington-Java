@@ -8,6 +8,7 @@ import java.util.List;
 public class Game {
     public static final int SIZE = 8;
     private final Board board;
+    private String result = null;
 
     private PlayerColour nextPlayer = PlayerColour.WHITE;
 
@@ -57,6 +58,14 @@ public class Game {
 
         board.move(from, to);
         nextPlayer = nextPlayer == PlayerColour.WHITE ? PlayerColour.BLACK : PlayerColour.WHITE;
+
+        if (board.isCheckmate(nextPlayer)) {
+            isEnded = true;
+            result = nextPlayer == PlayerColour.WHITE ? "Black Wins" : "White wins";
+        } else if (board.isStalemate(nextPlayer)) {
+            isEnded = true;
+            result = "Stalemate";
+        }
     }
 
     public boolean isEnded() {
@@ -64,6 +73,6 @@ public class Game {
     }
 
     public String getResult() {
-        return null;
+        return result;
     }
 }
