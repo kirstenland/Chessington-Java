@@ -27,9 +27,25 @@ public class Pawn extends AbstractPiece {
         Coordinates[] diagonals = new Coordinates[]{from.plus(getDirection(), -1), from.plus(getDirection(), 1)};
         for (Coordinates diagonal: diagonals) {
             addIfEnemy(moves, from, diagonal, board);
+            if (canEnPassant(from, diagonal, board)) {
+                addIfEmpty(moves, from, diagonal, board);
+            }
         }
 
         return moves;
+    }
+
+    private boolean canEnPassant(Coordinates from, Coordinates to, Board board) {
+        Piece pieceToTake = board.get(to.plus(-getDirection(),0));
+        return (pieceToTake != null &&
+                pieceToTake.getType() == PieceType.PAWN &&
+                pieceToTake.getMoves() == 1 &&
+                from.getRow() == passantRank()) &&
+                board.getLastPiece() == pieceToTake;
+    }
+
+    private int passantRank() {
+        return ((colour == PlayerColour.WHITE) ? 3 : 4);
     }
 
 }

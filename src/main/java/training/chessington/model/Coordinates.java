@@ -49,4 +49,8 @@ public final class Coordinates {
     public boolean isOnBoard() {
         return row >= 0 && row < 8 && col >= 0 && col < 8;
     }
+
+    public Direction difference(Coordinates coords) {
+        return new Direction(row - coords.getRow(), col - coords.getCol());
+    }
 }

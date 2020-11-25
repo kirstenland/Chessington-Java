@@ -8,6 +8,10 @@ import training.chessington.model.PlayerColour;
 import java.util.List;
 
 public interface Piece {
+    int getMoves();
+
+    int getDirection();
+
     enum PieceType {
         PAWN, KNIGHT, BISHOP, ROOK, QUEEN, KING
     }

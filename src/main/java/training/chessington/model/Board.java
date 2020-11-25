@@ -8,6 +8,7 @@ import java.util.List;
 
 public class Board {
 
+    private Piece lastPiece;
     private Piece[][] board = new Piece[8][8];
 
     private Board() {
@@ -51,21 +52,32 @@ public class Board {
 
     public History move(Coordinates from, Coordinates to) {
         History history = new History();
+        history.setLastPiece(getLastPiece());
+        boolean isEnPassant = isEnPassant(from, to);
 
-        Piece piece = board[from.getRow()][from.getCol()];
+        Piece piece = get(from);
+        lastPiece = piece;
         piece.move();
         setAndStore(to, piece, history);
         setAndStore(from, null, history);
+        if (isEnPassant) {
+            setAndStore(to.plus(-piece.getDirection(), 0), null, history);
+        }
 
         Collections.reverse(history); // Return history in order to reverse
         return history;
     }
 
+    public Piece getLastPiece() {
+        return lastPiece;
+    }
+
     public void reverse(History history, Piece piece) {
         piece.reverseMove();
+        lastPiece = history.getLastPiece();
         for (HistoryItem item : history) {
             Coordinates coords = item.getCoords();
-            board[coords.getRow()][coords.getCol()] = item.getPiece();
+            placePiece(coords, item.getPiece());
         }
     }
 
@@ -138,5 +150,11 @@ public class Board {
         boolean result = !isCheck(piece.getColour());
         reverse(history, piece);
         return result;
+    }
+
+    private boolean isEnPassant(Coordinates from, Coordinates to) {
+        return get(to) == null &&
+                to.difference(from).isDiagonal() &&
+                get(from).getType() == Piece.PieceType.PAWN;
     }
 }

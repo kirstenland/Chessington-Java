@@ -40,4 +40,8 @@ public class Direction {
         directions.addAll(orthogonal());
         return directions;
     }
+
+    public boolean isDiagonal() {
+        return Math.abs(rowDiff) == 1 && Math.abs(colDiff) == 1;
+    }
 }

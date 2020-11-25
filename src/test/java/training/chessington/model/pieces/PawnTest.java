@@ -282,4 +282,105 @@ public class PawnTest {
         Coordinates otherDiagonal = pawnCoords.plus(1, -1);
         assertThat(moves).doesNotContain(new Move(pawnCoords, otherDiagonal));
     }
+
+    @Test
+    public void blackPawnCanEnPassant() {
+        // Arrange
+        Board board = Board.empty();
+        Piece pawn = new Pawn(PlayerColour.BLACK);
+        Piece enemyPawn = new Pawn(PlayerColour.WHITE);
+
+        Coordinates coords = new Coordinates(4, 4);
+        board.placePiece(coords, pawn);
+
+        Coordinates enemyCoords = coords.plus(2, 1);
+        board.placePiece(enemyCoords, enemyPawn);
+
+        board.move(enemyCoords, enemyCoords.plus(-2, 0));
+
+        // Act
+        List<Move> moves = pawn.getAllowedMoves(coords, board);
+
+        // Assert
+        assertThat(moves).contains(new Move(coords, coords.plus(1,1)));
+    }
+
+    @Test
+    public void whitePawnCanEnPassant(){
+        // Arrange
+        Board board = Board.empty();
+        Piece pawn = new Pawn(PlayerColour.WHITE);
+        Piece enemyPawn = new Pawn(PlayerColour.BLACK);
+
+        Coordinates coords = new Coordinates(3, 4);
+        board.placePiece(coords, pawn);
+
+        Coordinates enemyCoords = coords.plus(-2, 1);
+        board.placePiece(enemyCoords, enemyPawn);
+
+        board.move(enemyCoords, enemyCoords.plus(2, 0));
+
+        // Act
+        List<Move> moves = pawn.getAllowedMoves(coords, board);
+
+        // Assert
+        assertThat(moves).contains(new Move(coords, coords.plus(-1,1)));
+    }
+
+    @Test
+    public void cannotEnPassantIfPieceToTakeMovedOne(){
+        // Arrange
+        Board board = Board.empty();
+        Piece pawn = new Pawn(PlayerColour.WHITE);
+        Piece enemyPawn = new Pawn(PlayerColour.BLACK);
+
+        Coordinates coords = new Coordinates(3, 4);
+        board.placePiece(coords, pawn);
+
+        Coordinates enemyCoords = coords.plus(-2, 1);
+        board.placePiece(enemyCoords, enemyPawn);
+
+        board.move(enemyCoords, enemyCoords.plus(1, 0));
+        board.move(enemyCoords.plus(1, 0), enemyCoords.plus(2, 0));
+
+        // Act
+        List<Move> moves = pawn.getAllowedMoves(coords, board);
+
+        // Assert
+        assertThat(moves).doesNotContain(new Move(coords, coords.plus(-1,1)));
+    }
+
+    @Test
+    public void cannotEnPassantIfMovesInBetween(){
+        // Arrange
+        Board board = Board.empty();
+        Piece pawn = new Pawn(PlayerColour.WHITE);
+        Piece enemyPawn = new Pawn(PlayerColour.BLACK);
+        Piece rook = new Rook(PlayerColour.WHITE);
+        Piece enemyRook = new Rook(PlayerColour.BLACK);
+
+        Coordinates coords = new Coordinates(3, 4);
+        board.placePiece(coords, pawn);
+
+        Coordinates enemyCoords = coords.plus(-2, 1);
+        board.placePiece(enemyCoords, enemyPawn);
+
+        Coordinates rookCoords = new Coordinates(0, 0);
+        board.placePiece(rookCoords, rook);
+
+        Coordinates enemyRookCoords = new Coordinates(7,7);
+        board.placePiece(enemyRookCoords, enemyRook);
+
+        board.move(enemyCoords, enemyCoords.plus(2, 0));
+        board.move(rookCoords, rookCoords.plus(1,0));
+        board.move(enemyRookCoords, enemyRookCoords.plus(-1, 0));
+
+        // Act
+        List<Move> moves = pawn.getAllowedMoves(coords, board);
+
+        // Assert
+        assertThat(moves).doesNotContain(new Move(coords, coords.plus(-1,1)));
+    }
+
+
 }

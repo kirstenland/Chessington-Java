@@ -18,6 +18,11 @@ public abstract class AbstractPiece implements Piece {
     }
 
     @Override
+    public int getMoves() {
+        return moveCount;
+    }
+
+    @Override
     public Piece.PieceType getType() {
         return type;
     }
@@ -32,12 +37,8 @@ public abstract class AbstractPiece implements Piece {
         return colour.toString() + " " + type.toString();
     }
 
-    public Integer getDirection() {
-        switch(colour) {
-            case WHITE: return -1;
-            case BLACK: return 1;
-        }
-        return null;
+    public int getDirection() {
+        return colour == PlayerColour.WHITE ? -1 : 1;
     }
 
     public void move() {
