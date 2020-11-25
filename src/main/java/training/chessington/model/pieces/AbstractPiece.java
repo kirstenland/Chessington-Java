@@ -9,12 +9,12 @@ public abstract class AbstractPiece implements Piece {
 
     protected final Piece.PieceType type;
     protected final PlayerColour colour;
-    protected boolean moved;
+    protected int moveCount;
 
     protected AbstractPiece(Piece.PieceType type, PlayerColour colour) {
         this.type = type;
         this.colour = colour;
-        moved = false;
+        moveCount = 0;
     }
 
     @Override
@@ -40,8 +40,16 @@ public abstract class AbstractPiece implements Piece {
         return null;
     }
 
-    public void setMoved() {
-        moved = true;
+    public void move() {
+        moveCount += 1;
+    }
+
+    public void reverseMove() {
+        moveCount -= 1;
+    }
+
+    public boolean getMoved() {
+        return (moveCount > 0);
     }
 
     protected boolean isEnemy(Piece piece) {

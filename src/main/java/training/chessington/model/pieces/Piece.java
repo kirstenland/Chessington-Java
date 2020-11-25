@@ -17,5 +17,6 @@ public interface Piece {
 
     List<Move> getAllowedMoves(Coordinates from, Board board);
     List<Move> getMovesBeforeCheck(Coordinates from, Board board);
-    void setMoved();
+    void move();
+    void reverseMove();
 }

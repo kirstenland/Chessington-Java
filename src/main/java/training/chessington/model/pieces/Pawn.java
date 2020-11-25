@@ -20,7 +20,7 @@ public class Pawn extends AbstractPiece {
         Coordinates oneStep = from.plus(getDirection(), 0);
         Coordinates twoSteps = oneStep.plus(getDirection(), 0);
         addIfEmpty(moves, from, oneStep, board);
-        if (!moved && board.get(oneStep) == null) {
+        if (!getMoved() && board.get(oneStep) == null) {
             addIfEmpty(moves, from, twoSteps, board);
         }
 

@@ -3,6 +3,7 @@ package training.chessington.model;
 import training.chessington.model.pieces.*;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Board {
@@ -48,11 +49,30 @@ public class Board {
         }
     }
 
-    public void move(Coordinates from, Coordinates to) {
+    public History move(Coordinates from, Coordinates to) {
+        History history = new History();
+
         Piece piece = board[from.getRow()][from.getCol()];
-        piece.setMoved();
-        board[to.getRow()][to.getCol()] = piece;
-        board[from.getRow()][from.getCol()] = null;
+        piece.move();
+        setAndStore(to, piece, history);
+        setAndStore(from, null, history);
+
+        Collections.reverse(history); // Return history in order to reverse
+        return history;
+    }
+
+    public void reverse(History history, Piece piece) {
+        piece.reverseMove();
+        for (HistoryItem item : history) {
+            Coordinates coords = item.getCoords();
+            board[coords.getRow()][coords.getCol()] = item.getPiece();
+        }
+    }
+
+    private void setAndStore(Coordinates coords, Piece piece, History history) {
+        Piece oldPiece = get(coords);
+        board[coords.getRow()][coords.getCol()] = piece;
+        history.add(new HistoryItem(oldPiece, coords));
     }
 
     public void placePiece(Coordinates coords, Piece piece) {
@@ -114,15 +134,9 @@ public class Board {
     }
 
     public boolean testMove(Piece piece, Coordinates from, Coordinates to) {
-        Piece takenPiece = board[to.getRow()][to.getCol()];
-        board[to.getRow()][to.getCol()] = piece;
-        board[from.getRow()][from.getCol()] = null;
-
+        History history = move(from, to);
         boolean result = !isCheck(piece.getColour());
-
-        board[to.getRow()][to.getCol()] = takenPiece;
-        board[from.getRow()][from.getCol()] = piece;
-
+        reverse(history, piece);
         return result;
     }
 }
